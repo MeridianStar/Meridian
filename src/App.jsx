@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 
 // ================================================================
-//  MERIDIAN  â€”  Final Release
+//  MERIDIAN  —  Final Release
 // ================================================================
 
 const CSS = `
@@ -34,7 +34,7 @@ const CSS = `
   input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:var(--c,#c8c8d4);border:2px solid #0a0a0a;cursor:pointer;}
 `;
 
-// â”€â”€ TOKENS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── TOKENS ──────────────────────────────────────────────────────
 const Z={
   bg:"#0a0a0a",s1:"#111111",s2:"#1a1a1a",s3:"#222222",
   b:"#2a2a2a",b2:"#333333",
@@ -44,9 +44,9 @@ const SILVER="rgba(210,210,220,0.55)";
 const SILVER_BRIGHT="rgba(230,230,240,0.85)";
 const ERR_LIGHT="#fca5a5"; // rosso chiaro per task urgenti
 
-// Tab accent â€” argento uniforme, elegante
+// Tab accent — argento uniforme, elegante
 
-// Colori area â€” ben distinti
+// Colori area — ben distinti
 const AREA_C={
   salute:"#00e5a0",   // verde acqua
   lavoro:"#ff7b54",   // arancio caldo
@@ -61,7 +61,7 @@ const STATUS={
   green: {l:"Ottimo",  c:"#4ade80"},
 };
 
-// Vita aree â€” colori piÃ¹ distinti
+// Vita aree — colori più distinti
 const VITA_AREE=[
   {id:"salute",   nome:"Salute",   color:"#00e5a0", cat:[
     {id:"v-mente", nome:"Mente",     desc:"Chiarezza, concentrazione, stress"},
@@ -74,18 +74,18 @@ const VITA_AREE=[
     {id:"v-proj",  nome:"Progetti",     desc:"Realizzazioni, impatto"},
   ]},
   {id:"relazioni",nome:"Legami",   color:"#c084fc", cat:[
-    {id:"v-amore", nome:"Amore",        desc:"Coppia, intimitÃ , connessione"},
+    {id:"v-amore", nome:"Amore",        desc:"Coppia, intimità, connessione"},
     {id:"v-fam",   nome:"Famiglia",     desc:"Rapporti familiari, presenza"},
-    {id:"v-amici", nome:"Amici",        desc:"Vita sociale, comunitÃ "},
+    {id:"v-amici", nome:"Amici",        desc:"Vita sociale, comunità"},
   ]},
   {id:"gioia",    nome:"Armonia",  color:"#38bdf8", cat:[
     {id:"v-amb",   nome:"Ambiente",     desc:"Casa, spazio, ordine"},
-    {id:"v-pass",  nome:"Passioni",     desc:"Hobby, creativitÃ , tempo per sÃ©"},
+    {id:"v-pass",  nome:"Passioni",     desc:"Hobby, creatività, tempo per sé"},
     {id:"v-svil",  nome:"Crescita",     desc:"Apprendimento, sviluppo personale"},
   ]},
 ];
 
-// â”€â”€ UTILS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── UTILS ────────────────────────────────────────────────────────
 const pad=n=>String(n).padStart(2,"0");
 function tod(){const d=new Date();return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;}
 function ago(n){const d=new Date();d.setDate(d.getDate()-n);return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;}
@@ -143,7 +143,7 @@ function wScr(habits,tr,off=0){
   return Math.round(habits.reduce((s,h)=>s+days.filter(d=>tr[h.id]?.[d]).length,0)/exp*100);
 }
 
-// â”€â”€ INIT DATA â€” dati fittizi realistici â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── INIT DATA — dati fittizi realistici ─────────────────────────
 const TODAY=tod();
 const INIT={
   tasks:[
@@ -160,32 +160,32 @@ const INIT={
     "v-amb":6,"v-pass":4,"v-svil":5,
   },
   goals:[
-    {id:"g1",text:"ðŸ’ª Massa grassa al 15%",s:"red",note:"Target entro dicembre 2026",pct:18,tasks:[
+    {id:"g1",text:"💪 Massa grassa al 15%",s:"red",note:"Target entro dicembre 2026",pct:18,tasks:[
       {id:"g1t1",text:"Visita medica baseline",done:true},
       {id:"g1t2",text:"Piano alimentare con nutrizionista",done:true},
       {id:"g1t3",text:"Allenamento 4x settimana",done:false},
-      {id:"g1t4",text:"Pesarsi ogni lunedÃ¬ mattina",done:false},
+      {id:"g1t4",text:"Pesarsi ogni lunedì mattina",done:false},
       {id:"g1t5",text:"Target: -1% BF ogni mese",done:false},
     ]},
-    {id:"g2",text:"ðŸš€ Top #3 Senior Manager",s:"orange",note:"Entro giugno 2027",pct:30,tasks:[
+    {id:"g2",text:"🚀 Top #3 Senior Manager",s:"orange",note:"Entro giugno 2027",pct:30,tasks:[
       {id:"g2t1",text:"Aggiornare CV e LinkedIn",done:true},
       {id:"g2t2",text:"3 colloqui interni entro Q3",done:false},
       {id:"g2t3",text:"Trovare un mentore dirigente",done:false},
       {id:"g2t4",text:"Completare corso leadership",done:false},
     ]},
-    {id:"g3",text:"ðŸ’ Matrimonio con Costanza",s:"yellow",note:"Estate 2027",pct:45,tasks:[
+    {id:"g3",text:"💍 Matrimonio con Costanza",s:"yellow",note:"Estate 2027",pct:45,tasks:[
       {id:"g3t1",text:"Scegliere la location",done:true},
       {id:"g3t2",text:"Definire lista invitati",done:true},
       {id:"g3t3",text:"Fotografo e catering",done:false},
       {id:"g3t4",text:"Abiti e accessori",done:false},
       {id:"g3t5",text:"Destinazione luna di miele",done:false},
     ]},
-    {id:"g4",text:"ðŸ¦ Risparmio 30.000â‚¬ CD",s:"red",note:"Obiettivo 2026",pct:22,tasks:[
+    {id:"g4",text:"🏦 Risparmio 30.000€ CD",s:"red",note:"Obiettivo 2026",pct:22,tasks:[
       {id:"g4t1",text:"Aprire conto deposito",done:true},
       {id:"g4t2",text:"Bonifico mensile automatico",done:false},
       {id:"g4t3",text:"Eliminare 2 spese fisse",done:false},
     ]},
-    {id:"g5",text:"ðŸ“– Lettura 10 libri",s:"green",note:"Un libro al mese",pct:60,tasks:[
+    {id:"g5",text:"📖 Lettura 10 libri",s:"green",note:"Un libro al mese",pct:60,tasks:[
       {id:"g5t1",text:"La lezione del Giappone",done:true},
       {id:"g5t2",text:"Il nome della rosa",done:true},
       {id:"g5t3",text:"Siddharta",done:true},
@@ -253,7 +253,7 @@ const INIT={
 };
 
 
-// â”€â”€ ATOMS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── ATOMS ────────────────────────────────────────────────────────
 function Ring({pct,size=56,sw=4,color,children}){
   const r=(size-sw*2)/2,ci=2*Math.PI*r,p=clamp(pct||0,0,100);
   return(
@@ -284,7 +284,7 @@ function Pill({label,color}){
   );
 }
 
-// â”€â”€ DATE PICKER SCROLL (stile cassaforte) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── DATE PICKER SCROLL (stile cassaforte) ────────────────────────
 function ScrollPicker({value,items,onChange,width=60}){
   const ref=useRef(null);
   const ITEM_H=40;
@@ -387,7 +387,7 @@ function DatePicker({value,onChange,onClose,accent}){
   );
 }
 
-// â”€â”€ BOTTOM SHEET â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── BOTTOM SHEET ─────────────────────────────────────────────────
 function Sheet({onClose,title,accent,children}){
   useEffect(()=>{const p=document.body.style.overflow;document.body.style.overflow="hidden";return()=>{document.body.style.overflow=p||""};},[]);
   const col=accent||SILVER;
@@ -414,7 +414,7 @@ function Sheet({onClose,title,accent,children}){
           maxHeight:"92vh",overflow:"hidden",display:"flex",flexDirection:"column",
           transform:`translateY(${dragY}px)`,
           transition:dragY===0?"transform 0.3s cubic-bezier(0.16,1,0.3,1)":"none"}}>
-        {/* Handle â€” draggabile */}
+        {/* Handle — draggabile */}
         <div
           onTouchStart={onTS} onTouchMove={onTM} onTouchEnd={onTE}
           style={{padding:"12px 0 4px",display:"flex",justifyContent:"center",
@@ -428,7 +428,7 @@ function Sheet({onClose,title,accent,children}){
   );
 }
 
-// â”€â”€ WAKE LOG â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── WAKE LOG ─────────────────────────────────────────────────────
 function WakeLog({h,logs,onLog,onClose}){
   const ts=tod();
   const ex=logs[h.id]?.[ts]?.wakeTime||"";
@@ -436,7 +436,7 @@ function WakeLog({h,logs,onLog,onClose}){
   const col=AREA_C[h.aId]||SILVER;
   const hist=d7().map(d=>({d,t:logs[h.id]?.[d]?.wakeTime})).filter(x=>x.t);
   return(
-    <Sheet onClose={onClose} title={`Sveglia â€” ${h.nome}`} accent={col}>
+    <Sheet onClose={onClose} title={`Sveglia — ${h.nome}`} accent={col}>
       <div style={{textAlign:"center",marginBottom:16}}>
         <input type="time" value={time} onChange={e=>setTime(e.target.value)}
           style={{background:Z.s2,border:`1.5px solid ${col}55`,borderRadius:12,
@@ -479,7 +479,7 @@ function WakeLog({h,logs,onLog,onClose}){
   );
 }
 
-// â”€â”€ EDIT HABIT SHEET â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── EDIT HABIT SHEET ─────────────────────────────────────────────
 function EditHabit({item,onSave,onDel,onClose}){
   const [st,setSt]=useState(item.s||"red");
   const [note,setNote]=useState(item.note||"");
@@ -573,7 +573,7 @@ function EditHabit({item,onSave,onDel,onClose}){
   );
 }
 
-// â”€â”€ EDIT GOAL SHEET â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── EDIT GOAL SHEET ──────────────────────────────────────────────
 function EditGoal({item,onSave,onDel,onClose,isNew}){
   const [text,setText]=useState(item.text||"");
   const [note,setNote]=useState(item.note||"");
@@ -621,7 +621,7 @@ function EditGoal({item,onSave,onDel,onClose,isNew}){
   );
 }
 
-// â”€â”€ EDIT TASK SHEET â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── EDIT TASK SHEET ──────────────────────────────────────────────
 function EditTask({task,onSave,onDel,onClose,aree}){
   const [txt,setTxt]=useState(task.text||"");
   const [dl,setDl]=useState(task.deadline||"");
@@ -646,7 +646,7 @@ function EditTask({task,onSave,onDel,onClose,aree}){
           borderRadius:9,color:dl?Z.t:Z.t3,fontSize:14,textAlign:"left",marginBottom:14,
           display:"flex",alignItems:"center",justifyContent:"space-between"}}>
         <span>{dl?fmtDate(dl):"Nessuna scadenza"}</span>
-        <span style={{fontSize:12,color:Z.t3}}>ðŸ“…</span>
+        <span style={{fontSize:12,color:Z.t3}}>📅</span>
       </button>
       {/* Area */}
       <div style={{fontSize:11,color:Z.t2,fontWeight:600,letterSpacing:"0.08em",
@@ -695,7 +695,7 @@ function EditTask({task,onSave,onDel,onClose,aree}){
   );
 }
 
-// â”€â”€ HABIT ROW â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── HABIT ROW ─────────────────────────────────────────────────────
 function HRow({h,tr,logs,onToggle,onEdit,onLog,onDel,compact,showArea}){
   const ts=tod(),done=!!(tr[h.id]?.[ts]);
   const sk=!compact?strkF(h,tr):0;
@@ -713,7 +713,7 @@ function HRow({h,tr,logs,onToggle,onEdit,onLog,onDel,compact,showArea}){
           background:tx<0?"#f87171":"#00e5a0",
           display:"flex",alignItems:"center",justifyContent:"center",
           transform:`scale(${0.3+prog*0.7})`,opacity:prog}}>
-          <span style={{color:"white",fontSize:13,fontWeight:800}}>{done?"âœ•":"âœ“"}</span>
+          <span style={{color:"white",fontSize:13,fontWeight:800}}>{done?"✕":"✓"}</span>
         </div>
       </div>
       <div
@@ -742,7 +742,7 @@ function HRow({h,tr,logs,onToggle,onEdit,onLog,onDel,compact,showArea}){
               animation:done?"checkpop 0.3s cubic-bezier(0.34,1.56,0.64,1) both":"none",
               transition:"background 0.18s,border-color 0.18s",
               position:"relative",zIndex:1}}>
-            {done&&"âœ“"}
+            {done&&"✓"}
           </button>
         </div>
         <div style={{flex:1,minWidth:0,cursor:"pointer"}} onClick={()=>swX.current<8&&onEdit(h)}>
@@ -756,7 +756,7 @@ function HRow({h,tr,logs,onToggle,onEdit,onLog,onDel,compact,showArea}){
           {showArea&&(
             <div style={{display:"flex",alignItems:"center",gap:4}}>
               <div style={{width:5,height:5,borderRadius:"50%",background:col,flexShrink:0}}/>
-              <span style={{fontSize:10,color:col,fontWeight:500}}>{h.aN} Â· {h.cN}</span>
+              <span style={{fontSize:10,color:col,fontWeight:500}}>{h.aN} · {h.cN}</span>
             </div>
           )}
           {!compact&&h.freq?.type!=="daily"&&(
@@ -776,7 +776,7 @@ function HRow({h,tr,logs,onToggle,onEdit,onLog,onDel,compact,showArea}){
               <span className={sk>=30?"streak30":sk>=14?"streak14":sk>=7?"streak7":""}
                 style={{fontSize:11,color:sk>=30?"#ff6b35":sk>=14?"#fb923c":"#fb923c",
                   marginLeft:5,fontWeight:600,display:"inline-block"}}>
-                ðŸ”¥{sk}
+                🔥{sk}
               </span>
             )}
             </div>
@@ -790,12 +790,12 @@ function HRow({h,tr,logs,onToggle,onEdit,onLog,onDel,compact,showArea}){
                 border:`1px solid ${todayWake?col+"55":Z.b}`,
                 borderRadius:6,color:todayWake?col:Z.t2,
                 fontFamily:"'JetBrains Mono',monospace",fontWeight:todayWake?700:400}}>
-              {todayWake||"â°"}
+              {todayWake||"⏰"}
             </button>
           )}
           {onLog&&h.logType&&h.logType!=="nessuno"&&h.logType!=="sveglia"&&(
             <button onClick={e=>{e.stopPropagation();onLog(h);}}
-              style={{fontSize:13,padding:0,lineHeight:1,opacity:0.7}}>ðŸ“Š</button>
+              style={{fontSize:13,padding:0,lineHeight:1,opacity:0.7}}>📊</button>
           )}
           <Dot c={sc.c} size={7}/>
         </div>
@@ -804,7 +804,7 @@ function HRow({h,tr,logs,onToggle,onEdit,onLog,onDel,compact,showArea}){
   );
 }
 
-// â”€â”€ AREA SECTION â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── AREA SECTION ─────────────────────────────────────────────────
 function AreaSection({area,tr,logs,onToggle,onEdit,onLog,onAdd,onDel}){
   const [open,setOpen]=useState(false);
   const [adding,setAdding]=useState(null);
@@ -837,9 +837,9 @@ function AreaSection({area,tr,logs,onToggle,onEdit,onLog,onAdd,onDel}){
         </Ring>
         <div style={{flex:1}}>
           <div style={{fontSize:15,fontWeight:600,color:Z.t}}>{area.nome}</div>
-          <div style={{fontSize:11,color:Z.t2,marginTop:1}}>{habits.length} abitudini Â· {dn}/{todayH.length} oggi</div>
+          <div style={{fontSize:11,color:Z.t2,marginTop:1}}>{habits.length} abitudini · {dn}/{todayH.length} oggi</div>
         </div>
-        <span style={{color:Z.t3,fontSize:16,transform:open?"rotate(180deg)":"none",transition:"transform 0.2s"}}>âŒ„</span>
+        <span style={{color:Z.t3,fontSize:16,transform:open?"rotate(180deg)":"none",transition:"transform 0.2s"}}>⌄</span>
       </button>
 
       {open&&(
@@ -896,7 +896,7 @@ function AreaSection({area,tr,logs,onToggle,onEdit,onLog,onAdd,onDel}){
   );
 }
 
-// â”€â”€ SLIDER CUSTOM â€” cross-platform â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── SLIDER CUSTOM — cross-platform ───────────────────────────────
 function SliderCustom({value,onChange,color,min=0,max=10,step=1}){
   const pct=((value-min)/(max-min))*100;
   const trackRef=useRef(null);
@@ -940,7 +940,7 @@ function SliderCustom({value,onChange,color,min=0,max=10,step=1}){
 }
 
 
-// â”€â”€ LABEL ROW per Radar Vita â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── LABEL ROW per Radar Vita ─────────────────────────────────────
 function LabelRow({left,right,top,openArea,areaPcts,setOpenArea}){
   return(
     <div style={{display:"flex",justifyContent:"space-between",
@@ -978,7 +978,7 @@ function LabelRow({left,right,top,openArea,areaPcts,setOpenArea}){
 }
 
 
-// â”€â”€ VITA SCREEN â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── VITA SCREEN ──────────────────────────────────────────────────
 function Vita({data,setData}){
   const scores   = data.vita||{};
   const setScore = (id,v)=>setData(d=>({...d,vita:{...d.vita,[id]:v}}));
@@ -993,7 +993,7 @@ function Vita({data,setData}){
   const areaPcts  = VITA_AREE.map(a=>areaScore(a));
   const globalAvg = Math.round(areaPcts.reduce((s,v)=>s+v,0)/VITA_AREE.length*10)/10;
 
-  // Geometria: 4 spicchi 90Â°, 3 cat per area, gap 8Â°
+  // Geometria: 4 spicchi 90°, 3 cat per area, gap 8°
   const CX=210, CY=180, R=118;
   const GAP=(8*Math.PI)/180, SPAN=Math.PI/2, CSPAN=(SPAN-GAP)/3;
 
@@ -1010,7 +1010,7 @@ function Vita({data,setData}){
   const f2=n=>n.toFixed(2);
   const px=(a,v)=>CX+(v/10)*R*Math.cos(a);
   const py=(a,v)=>CY+(v/10)*R*Math.sin(a);
-  // Per visualizzazione: se valore Ã¨ 0 usa 0.5 cosÃ¬ il poligono Ã¨ visibile
+  // Per visualizzazione: se valore è 0 usa 0.5 così il poligono è visibile
   const displayVals=vals.map(v=>v===0?0.3:v);
   const poly=ALL.map((x,i)=>`${i===0?"M":"L"}${f2(px(x.ang,displayVals[i]))},${f2(py(x.ang,displayVals[i]))}`).join(" ")+"Z";
   const ring=v=>ALL.map((x,i)=>`${i===0?"M":"L"}${f2(px(x.ang,v))},${f2(py(x.ang,v))}`).join(" ")+"Z";
@@ -1027,7 +1027,7 @@ function Vita({data,setData}){
         </span>
       </div>
 
-      {/* Radar card â€” altezza limitata */}
+      {/* Radar card — altezza limitata */}
       <div className="up" style={{background:"#0d0d0d",
         border:"1px solid #1e1e1e",borderRadius:20,
         padding:"14px",marginBottom:12}}>
@@ -1036,7 +1036,7 @@ function Vita({data,setData}){
         <LabelRow left={3} right={0} top={true}
           openArea={openArea} areaPcts={areaPcts} setOpenArea={setOpenArea}/>
 
-        {/* SVG â€” altezza fissa 260px max */}
+        {/* SVG — altezza fissa 260px max */}
         <svg viewBox="0 0 420 360"
           style={{display:"block",width:"100%",maxHeight:260}}>
           <defs>
@@ -1128,7 +1128,7 @@ function Vita({data,setData}){
             );
           })}
 
-          {/* Label categorie â€” nomi completi, font piccolo, fuori dal cerchio */}
+          {/* Label categorie — nomi completi, font piccolo, fuori dal cerchio */}
           {ALL.map((x,i)=>{
             const lr=R+20;
             const lx=CX+lr*Math.cos(x.ang);
@@ -1164,7 +1164,7 @@ function Vita({data,setData}){
           openArea={openArea} areaPcts={areaPcts} setOpenArea={setOpenArea}/>
       </div>
 
-      {/* Card aree 2Ã—2 */}
+      {/* Card aree 2×2 */}
       <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
         {VITA_AREE.map((area,i)=>{
           const score=areaPcts[i];
@@ -1188,7 +1188,7 @@ function Vita({data,setData}){
                   <span style={{fontSize:12,color:sel?area.color:Z.t3,
                     transform:sel?"rotate(180deg)":"rotate(0deg)",
                     transition:"transform 0.2s",marginLeft:2,
-                    display:"inline-block"}}>âŒ„</span>
+                    display:"inline-block"}}>⌄</span>
                 </div>
                 <div style={{height:2,background:Z.b,borderRadius:1,overflow:"hidden"}}>
                   <div style={{height:"100%",width:`${score*10}%`,
@@ -1241,7 +1241,7 @@ function Vita({data,setData}){
 }
 
 
-// â”€â”€ ADD IN AREA â€” mini form inline â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── ADD IN AREA — mini form inline ───────────────────────────────
 function AddInArea({area,onAdd,color}){
   const [catId,setCatId]=useState(area.cat[0]?.id||"");
   const [name,setName]=useState("");
@@ -1281,7 +1281,7 @@ function AddInArea({area,onAdd,color}){
   );
 }
 
-// â”€â”€ ABITUDINI SCREEN â€” Card aree + lista filtrata â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── ABITUDINI SCREEN — Card aree + lista filtrata ────────────────
 function Abitudini({data,tr,logs,onToggle,onEdit,onLog,onAdd,onDel}){
   const ts=tod();
   const [filterArea,setFilterArea]=useState(null); // null = mostra tutte
@@ -1330,9 +1330,9 @@ function Abitudini({data,tr,logs,onToggle,onEdit,onLog,onAdd,onDel}){
         </div>
       </div>
 
-      {/* Card aree â€” "Tutte" riga intera + 4 aree griglia 2x2 */}
+      {/* Card aree — "Tutte" riga intera + 4 aree griglia 2x2 */}
       <div style={{marginBottom:14}}>
-        {/* Tutte â€” riga intera */}
+        {/* Tutte — riga intera */}
         <button onClick={()=>setFilterArea(null)}
           style={{width:"100%",padding:"10px 14px",borderRadius:14,textAlign:"left",
             background:!filterArea?"rgba(210,210,220,0.1)":"rgba(255,255,255,0.03)",
@@ -1357,7 +1357,7 @@ function Abitudini({data,tr,logs,onToggle,onEdit,onLog,onAdd,onDel}){
           </div>
         </button>
 
-        {/* 4 aree â€” griglia 2x2 */}
+        {/* 4 aree — griglia 2x2 */}
         <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
           {areaStats.map(area=>{
             const sel=filterArea===area.id;
@@ -1377,7 +1377,7 @@ function Abitudini({data,tr,logs,onToggle,onEdit,onLog,onAdd,onDel}){
                     whiteSpace:"nowrap",overflow:"hidden",
                     textOverflow:"ellipsis"}}>{area.nome}</span>
                   {area.pct===100&&
-                    <span style={{fontSize:11,color:"#00e5a0",fontWeight:700}}>âœ“</span>}
+                    <span style={{fontSize:11,color:"#00e5a0",fontWeight:700}}>✓</span>}
                 </div>
                 <div style={{height:2,background:"rgba(255,255,255,0.08)",
                   borderRadius:1,overflow:"hidden",marginBottom:6}}>
@@ -1400,7 +1400,7 @@ function Abitudini({data,tr,logs,onToggle,onEdit,onLog,onAdd,onDel}){
                     color:area.color,letterSpacing:"0.08em",
                     textTransform:"uppercase",
                     fontFamily:"'JetBrains Mono',monospace"}}>
-                    â— filtro attivo
+                    ● filtro attivo
                   </div>
                 )}
               </button>
@@ -1409,7 +1409,7 @@ function Abitudini({data,tr,logs,onToggle,onEdit,onLog,onAdd,onDel}){
         </div>
       </div>
 
-      {/* Lista abitudini â€” piatta, diretta */}
+      {/* Lista abitudini — piatta, diretta */}
       {visibleH.length===0?(
         <div style={{textAlign:"center",padding:"32px 20px",
           background:Z.s1,border:`1px solid ${Z.b}`,borderRadius:14}}>
@@ -1446,7 +1446,7 @@ function Abitudini({data,tr,logs,onToggle,onEdit,onLog,onAdd,onDel}){
             </div>
           ))}
 
-          {/* Add â€” inline per area selezionata */}
+          {/* Add — inline per area selezionata */}
           {filterArea&&(()=>{
             const area=data.aree.find(a=>a.id===filterArea);
             if(!area)return null;
@@ -1477,7 +1477,7 @@ function Abitudini({data,tr,logs,onToggle,onEdit,onLog,onAdd,onDel}){
 }
 
 
-// â”€â”€ TASK SCREEN â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── TASK SCREEN ────────────────────────────────────────────────────
 function TaskScreen({data,setData,onAdd,showToast}){
   const [editT,setEditT]=useState(null);
   const tog=id=>setData(d=>({...d,tasks:(d.tasks||[]).map(t=>t.id===id?{...t,done:!t.done}:t)}));
@@ -1521,7 +1521,7 @@ function TaskScreen({data,setData,onAdd,showToast}){
           borderRadius:12,overflow:"hidden",marginBottom:12}}>
           <div style={{padding:"10px 14px 4px",fontSize:11,color:"#f87171",fontWeight:600,
             letterSpacing:"0.08em",textTransform:"uppercase",fontFamily:"'JetBrains Mono',monospace"}}>
-            Scadute Â· {urg.length}
+            Scadute · {urg.length}
           </div>
           {urg.map((t,i)=>{
             const d2=fmtDL(t.deadline);
@@ -1538,7 +1538,7 @@ function TaskScreen({data,setData,onAdd,showToast}){
                     {aCol&&<span style={{fontSize:10,color:aCol+"99"}}>{data.aree.find(a=>a.id===t.aId)?.nome}</span>}
                   </div>
                 </div>
-                <button onClick={()=>del(t.id)} style={{color:Z.t3,fontSize:18,lineHeight:1,opacity:0.5,padding:"4px 8px",margin:"-4px -8px"}}>Ã—</button>
+                <button onClick={()=>del(t.id)} style={{color:Z.t3,fontSize:18,lineHeight:1,opacity:0.5,padding:"4px 8px",margin:"-4px -8px"}}>×</button>
               </div>
             );
           })}
@@ -1548,7 +1548,7 @@ function TaskScreen({data,setData,onAdd,showToast}){
       {pend.filter(t=>!urg.includes(t)).length>0&&(
         <div style={{marginBottom:10}}>
           <div style={{fontSize:13,fontWeight:600,color:Z.t2,marginBottom:8}}>
-            Da fare Â· {pend.filter(t=>!urg.includes(t)).length}
+            Da fare · {pend.filter(t=>!urg.includes(t)).length}
           </div>
           {pend.filter(t=>!urg.includes(t)).map(t=>{
             const d2=fmtDL(t.deadline);
@@ -1567,17 +1567,17 @@ function TaskScreen({data,setData,onAdd,showToast}){
 
       {dn.length>0&&(
         <div>
-          <div style={{fontSize:13,fontWeight:600,color:Z.t3,marginBottom:8}}>Completate Â· {dn.length}</div>
+          <div style={{fontSize:13,fontWeight:600,color:Z.t3,marginBottom:8}}>Completate · {dn.length}</div>
           {dn.map(t=>(
             <div key={t.id} style={{display:"flex",alignItems:"center",gap:10,
               padding:"10px 14px",borderRadius:10,marginBottom:4,
               background:"rgba(0,229,160,0.04)",border:"1px solid rgba(0,229,160,0.12)",opacity:0.65}}>
               <button onClick={()=>tog(t.id)} style={{width:22,height:22,borderRadius:"50%",
                 background:"#00e5a0",border:"none",flexShrink:0,padding:0,
-                display:"flex",alignItems:"center",justifyContent:"center",color:"#0a0a0a",fontSize:12,fontWeight:700}}>âœ“</button>
+                display:"flex",alignItems:"center",justifyContent:"center",color:"#0a0a0a",fontSize:12,fontWeight:700}}>✓</button>
               <span style={{flex:1,fontSize:14,color:Z.t3,textDecoration:"line-through",
                 overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{t.text}</span>
-              <button onClick={()=>del(t.id)} style={{color:Z.t3,fontSize:18,lineHeight:1,opacity:0.4,padding:"4px 8px",margin:"-4px -8px"}}>Ã—</button>
+              <button onClick={()=>del(t.id)} style={{color:Z.t3,fontSize:18,lineHeight:1,opacity:0.4,padding:"4px 8px",margin:"-4px -8px"}}>×</button>
             </div>
           ))}
         </div>
@@ -1586,7 +1586,7 @@ function TaskScreen({data,setData,onAdd,showToast}){
   );
 }
 
-// â”€â”€ OBIETTIVI â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── OBIETTIVI ─────────────────────────────────────────────────────
 function Obiettivi({data,setData,showToast}){
   const [openG,setOpenG]=useState(null);
   const [editG,setEditG]=useState(null);
@@ -1641,7 +1641,7 @@ function Obiettivi({data,setData,showToast}){
       {data.goals.length===0&&(
         <div className="up" style={{background:Z.s1,border:`1px solid ${Z.b}`,
           borderRadius:16,padding:"40px 24px",textAlign:"center"}}>
-          <div style={{fontSize:32,marginBottom:12}}>ðŸŽ¯</div>
+          <div style={{fontSize:32,marginBottom:12}}>🎯</div>
           <h2 style={{fontSize:18,fontWeight:700,color:Z.t,marginBottom:8}}>
             Nessun obiettivo
           </h2>
@@ -1674,7 +1674,7 @@ function Obiettivi({data,setData,showToast}){
                   position:"relative",overflow:"hidden"}}>
                 <div style={{position:"absolute",top:0,left:0,right:0,height:2,background:"#00e5a0"}}/>
                 <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:8}}>
-                  <span style={{fontSize:20}}>ðŸ†</span>
+                  <span style={{fontSize:20}}>🏆</span>
                   <div style={{flex:1}}>
                     <div style={{fontSize:15,color:"#00e5a0",fontWeight:700}}>{g.text}</div>
                     {g.note&&<div style={{fontSize:12,color:"rgba(0,229,160,0.6)",marginTop:2}}>{g.note}</div>}
@@ -1689,7 +1689,7 @@ function Obiettivi({data,setData,showToast}){
                     <div style={{height:"100%",width:"100%",background:"#00e5a0",borderRadius:2}}/>
                   </div>
                   <span style={{fontSize:11,color:"#00e5a0",fontFamily:"'JetBrains Mono',monospace",fontWeight:700}}>
-                    {dn}/{gt.length} âœ“
+                    {dn}/{gt.length} ✓
                   </span>
                 </div>
               </div>
@@ -1761,14 +1761,14 @@ function Obiettivi({data,setData,showToast}){
                         border:`1.5px solid ${t.done?"#00e5a0":Z.b2}`,
                         display:"flex",alignItems:"center",justifyContent:"center",
                         color:"#0a0a0a",fontSize:12,fontWeight:700}}>
-                      {t.done&&"âœ“"}
+                      {t.done&&"✓"}
                     </button>
                     <span style={{flex:1,fontSize:14,color:t.done?Z.t3:Z.t,
                       textDecoration:t.done?"line-through":"none",fontWeight:t.done?400:500}}>
                       {t.text}
                     </span>
                     <button onClick={()=>delT(g.id,t.id)}
-                      style={{color:Z.t3,fontSize:18,lineHeight:1,opacity:0.4,padding:"4px 8px",margin:"-4px -8px"}}>Ã—</button>
+                      style={{color:Z.t3,fontSize:18,lineHeight:1,opacity:0.4,padding:"4px 8px",margin:"-4px -8px"}}>×</button>
                   </div>
                 ))}
                 {addTo===g.id?(
@@ -1809,7 +1809,7 @@ function Obiettivi({data,setData,showToast}){
   );
 }
 
-// â”€â”€ LUCIUS (ex Analisi) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── LUCIUS (ex Analisi) ───────────────────────────────────────────
 function Lucius({data,tr}){
   const [loading,setLoading]=useState(false);
   const [reply,setReply]=useState("");
@@ -1830,7 +1830,7 @@ function Lucius({data,tr}){
 Sono Davide. Ecco i miei dati Meridian:
 - Abitudini oggi: ${doneN}/${todayH.length} completate (${pct}%)
 - Score settimana: ${ws}%
-- Streak piÃ¹ lunghe: ${topStreak.filter(h=>h.sk>0).map(h=>`${h.nome} (${h.sk}gg)`).join(", ")||"nessuna"}
+- Streak più lunghe: ${topStreak.filter(h=>h.sk>0).map(h=>`${h.nome} (${h.sk}gg)`).join(", ")||"nessuna"}
 - Task aperte: ${pending.length}${pending.filter(t=>t.deadline&&new Date(t.deadline)<new Date()).length>0?` (${pending.filter(t=>t.deadline&&new Date(t.deadline)<new Date()).length} scadute)`:""}
 - Obiettivi: ${avgGoal}% avanzamento medio
 - Obiettivi: ${goals.map(g=>`${g.text} ${g.pct||0}%`).join(", ")}
@@ -1887,10 +1887,10 @@ Sono Davide. Ecco i miei dati Meridian:
       {!asked?(
         <div className="up d1" style={{textAlign:"center",padding:"32px 20px",
           background:Z.s1,border:`1px solid ${Z.b}`,borderRadius:16}}>
-          <div style={{fontSize:24,marginBottom:12}}>ðŸ§ </div>
+          <div style={{fontSize:24,marginBottom:12}}>🧠</div>
           <h2 style={{fontSize:17,fontWeight:700,color:Z.t,marginBottom:8}}>Parla con Lucius</h2>
           <p style={{fontSize:14,color:Z.t2,lineHeight:1.6,marginBottom:20}}>
-            Lucius analizza i tuoi dati e ti dÃ  una riflessione personalizzata sulla tua settimana.
+            Lucius analizza i tuoi dati e ti dà una riflessione personalizzata sulla tua settimana.
           </p>
           <button onClick={askLucius} disabled={loading}
             style={{padding:"13px 28px",
@@ -1915,7 +1915,7 @@ Sono Davide. Ecco i miei dati Meridian:
           ):(
             <>
               <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:14}}>
-                <span style={{fontSize:18}}>ðŸ§ </span>
+                <span style={{fontSize:18}}>🧠</span>
                 <span style={{fontSize:13,fontWeight:600,color:Z.t2}}>Lucius</span>
               </div>
               <div style={{fontSize:15,color:Z.t,lineHeight:1.7,whiteSpace:"pre-wrap"}}>{reply}</div>
@@ -1932,7 +1932,7 @@ Sono Davide. Ecco i miei dati Meridian:
   );
 }
 
-// â”€â”€ SWIPE TASK ROW â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── SWIPE TASK ROW ───────────────────────────────────────────────
 function SwipeTask({t,onToggle,onEdit,onDelete,aree}){
   const [tx,setTx]=useState(0),[sw,setSw]=useState(false);
   const swX=useRef(0),swS=useRef(0);
@@ -1952,7 +1952,7 @@ function SwipeTask({t,onToggle,onEdit,onDelete,aree}){
           ?`rgba(0,229,160,${prog*0.25})`
           :`rgba(248,113,113,${prog*0.25})`}}>
         <span style={{fontSize:16,opacity:prog}}>
-          {goingRight?"âœ“":"ðŸ—‘"}
+          {goingRight?"✓":"🗑"}
         </span>
       </div>
       <div
@@ -1979,7 +1979,7 @@ function SwipeTask({t,onToggle,onEdit,onDelete,aree}){
             border:`1.5px solid ${t.done?"#00e5a0":Z.b2}`,
             display:"flex",alignItems:"center",justifyContent:"center",
             color:"#0a0a0a",fontSize:12,fontWeight:700}}>
-          {t.done&&"âœ“"}
+          {t.done&&"✓"}
         </button>
         <div style={{flex:1,minWidth:0,cursor:"pointer"}}
           onClick={()=>swX.current===0&&onEdit(t)}>
@@ -2004,7 +2004,7 @@ function SwipeTask({t,onToggle,onEdit,onDelete,aree}){
 }
 
 
-// â”€â”€ HOME â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── HOME ─────────────────────────────────────────────────────────
 function Home({data,tr,logs,onToggle,onEditHabit,onLog,setScreen,setData,onAddTask,showToast}){
   const ts=tod();
   const habits=useMemo(()=>flatH(data.aree),[data.aree]);
@@ -2042,364 +2042,11 @@ function Home({data,tr,logs,onToggle,onEditHabit,onLog,setScreen,setData,onAddTa
               <span style={{fontSize:11,color:Z.t3,fontFamily:"'JetBrains Mono',monospace"}}>{pct}%</span>
             </div>
           </div>
-          <button onClick={()=>setScreen("abitudini")} style={{fontSize:12,color:Z.t3}}>Tutte â†’</button>
+          <button onClick={()=>setScreen("abitudini")} style={{fontSize:12,color:Z.t3}}>Tutte →</button>
         </div>
         {todayH.length===0?(
           <div style={{background:Z.s1,border:`1px solid ${Z.b}`,borderRadius:12,padding:"18px",textAlign:"center",color:Z.t3,fontSize:13}}>Nessuna abitudine prevista oggi</div>
         ):pct===100?(
           <div style={{background:"rgba(0,229,160,0.06)",border:"1px solid rgba(0,229,160,0.18)",borderRadius:12,padding:"16px",textAlign:"center"}}>
-            <div style={{fontSize:15,fontWeight:700,color:"#00e5a0",marginBottom:2}}>Tutto completato! ðŸŽ‰</div>
-            <div style={{fontSize:12,color:Z.t3}}>Ottima giornata, Davide</div>
-          </div>
-        ):(
-          <div style={{background:Z.s1,border:`1px solid ${Z.b}`,borderRadius:12,overflow:"hidden"}}>
-            {rem.slice(0,5).map((h,i)=>(
-              <div key={h.id} style={{borderTop:i>0?`1px solid ${Z.b}`:"none"}}>
-                <HRow h={h} tr={tr} logs={logs} onToggle={onToggle} onEdit={onEditHabit} onLog={onLog} compact showArea/>
-              </div>
-            ))}
-            {rem.length>5&&<button onClick={()=>setScreen("abitudini")} style={{width:"100%",padding:"10px",borderTop:`1px solid ${Z.b}`,background:"transparent",color:Z.t3,fontSize:13}}>+ altre {rem.length-5} â†’</button>}
-          </div>
-        )}
-      </div>
-      <div className="up d2">
-        <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:10}}>
-          <span style={{fontSize:14,fontWeight:700,color:Z.t}}>Task</span>
-          <div style={{display:"flex",gap:8,alignItems:"center"}}>
-            <button onClick={onAddTask} style={{fontSize:12,color:SILVER,fontWeight:600,padding:"4px 10px",background:"rgba(200,200,212,0.08)",border:"1px solid rgba(200,200,212,0.2)",borderRadius:20}}>+ Aggiungi</button>
-            {pending.length>0&&<button onClick={()=>setScreen("task")} style={{fontSize:12,color:Z.t3}}>Tutte â†’</button>}
-          </div>
-        </div>
-        {pending.length===0?(
-          <div style={{background:Z.s1,border:`1px solid ${Z.b}`,borderRadius:12,padding:"16px",textAlign:"center",color:Z.t3,fontSize:13}}>Nessun task aperta âœ“</div>
-        ):(
-          <div style={{background:Z.s1,border:`1px solid ${Z.b}`,borderRadius:12,overflow:"hidden"}}>
-            {[...urg,...pending.filter(t=>!urg.includes(t))].slice(0,4).map((t,i)=>(
-              <div key={t.id} style={{borderTop:i>0?`1px solid ${Z.b}`:"none"}}>
-                <SwipeTask t={t}
-                  onToggle={togT}
-                  onEdit={setEditT}
-                  onDelete={id=>{const backup=(data.tasks||[]).find(t=>t.id===id);delT(id);if(showToast)showToast("Task eliminato",backup?()=>setData(d=>({...d,tasks:[...(d.tasks||[]),backup]})):null);}}
-                  aree={data.aree}/>
-              </div>
-            ))}
-            {pending.length>4&&<button onClick={()=>setScreen("task")} style={{width:"100%",padding:"10px",borderTop:`1px solid ${Z.b}`,background:"transparent",color:Z.t3,fontSize:13}}>+ altre {pending.length-4}</button>}
-          </div>
-        )}
-      </div>
-
-
-    </div>
-  );
-}
-
-
-// â”€â”€ TOAST â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-function Toast({msg,onDone,onUndo}){
-  useEffect(()=>{
-    const t=setTimeout(onDone,onUndo?3500:2500);
-    return()=>clearTimeout(t);
-  },[]);
-  return(
-    <div style={{
-      position:"fixed",bottom:88,left:"50%",
-      transform:"translateX(-50%)",
-      zIndex:999,
-      background:"rgba(30,30,30,0.96)",
-      border:"1px solid rgba(255,255,255,0.12)",
-      borderRadius:20,
-      padding:"10px 8px 10px 18px",
-      fontSize:13,fontWeight:500,
-      color:Z.t,
-      whiteSpace:"nowrap",
-      backdropFilter:"blur(12px)",
-      WebkitBackdropFilter:"blur(12px)",
-      boxShadow:"0 4px 24px rgba(0,0,0,0.4)",
-      display:"flex",alignItems:"center",gap:10,
-      animation:"toast-in 0.25s cubic-bezier(0.16,1,0.3,1) both"}}>
-      <span>{msg}</span>
-      {onUndo&&(
-        <button onClick={()=>{onUndo();onDone();}}
-          style={{padding:"4px 10px",background:"rgba(255,255,255,0.15)",
-            border:"1px solid rgba(255,255,255,0.2)",borderRadius:12,
-            color:Z.t,fontSize:12,fontWeight:600,flexShrink:0}}>
-          Annulla
-        </button>
-      )}
-    </div>
-  );
-}
-
-
-// â”€â”€ APP ROOT â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-export default function App(){
-  const [data,setData]=useState(()=>{
-    try{
-      const raw=localStorage.getItem("m8");
-      if(!raw)return INIT;
-      const p=JSON.parse(raw);
-      if(!p.tasks)p.tasks=[];
-      if(!p.goals)p.goals=INIT.goals;
-      if(!p.vita||Object.keys(p.vita).length<12)p.vita={...INIT.vita,...(p.vita||{})};
-      if(!p.aree)p.aree=INIT.aree;
-      p.goals=p.goals.map(g=>({tasks:[],...g,pct:g.pct||0,s:g.s||"red",note:g.note||""}));
-      p.goals=p.goals.map(g=>{if(g.tasks?.length){const dn=g.tasks.filter(t=>t.done).length;return{...g,pct:Math.round(dn/g.tasks.length*100)};}return g;});
-      p.aree=p.aree.map(a=>({...a,color:AREA_C[a.id]||a.color,
-        cat:(a.cat||[]).map(c=>({...c,h:(c.h||[]).map(h=>({freq:{type:"daily"},...h}))}))}));
-      return p;
-    }catch{return INIT;}
-  });
-
-  const [tr,setTr]=useState(()=>{try{const s=localStorage.getItem("m-tr");if(s)return JSON.parse(s);return {"h1":{"2026-05-24":true,"2026-05-25":true,"2026-05-26":true,"2026-05-27":true,"2026-05-28":true,"2026-05-29":true,"2026-05-30":true,"2026-06-01":true,"2026-06-02":true,"2026-06-03":true,"2026-06-04":true,"2026-06-05":true,"2026-06-06":true},"h2":{"2026-05-25":true,"2026-05-27":true,"2026-06-01":true,"2026-06-02":true,"2026-06-03":true,"2026-06-04":true},"h3":{"2026-05-25":true,"2026-05-27":true,"2026-05-29":true,"2026-06-03":true,"2026-06-05":true},"h4":{"2026-05-24":true,"2026-05-25":true,"2026-05-26":true,"2026-05-28":true,"2026-05-29":true,"2026-05-30":true,"2026-05-31":true,"2026-06-02":true,"2026-06-03":true,"2026-06-04":true,"2026-06-05":true,"2026-06-06":true},"h5":{"2026-05-24":true,"2026-05-25":true,"2026-05-27":true,"2026-05-28":true,"2026-05-29":true,"2026-05-30":true,"2026-05-31":true,"2026-06-01":true,"2026-06-02":true,"2026-06-03":true,"2026-06-04":true,"2026-06-05":true,"2026-06-06":true},"h6":{"2026-05-24":true,"2026-05-25":true,"2026-05-26":true,"2026-05-27":true,"2026-05-28":true,"2026-05-29":true,"2026-05-30":true,"2026-05-31":true,"2026-06-01":true,"2026-06-03":true,"2026-06-04":true,"2026-06-05":true,"2026-06-06":true},"h7":{"2026-05-25":true,"2026-05-26":true,"2026-05-27":true,"2026-05-28":true,"2026-05-29":true,"2026-05-30":true,"2026-06-01":true,"2026-06-02":true,"2026-06-03":true,"2026-06-06":true},"h8":{"2026-05-25":true,"2026-06-01":true},"h9":{"2026-05-25":true,"2026-05-26":true,"2026-05-27":true,"2026-05-28":true,"2026-05-29":true,"2026-06-01":true,"2026-06-02":true,"2026-06-03":true,"2026-06-04":true},"h10":{"2026-06-01":true},"h11":{"2026-05-25":true,"2026-05-26":true,"2026-05-27":true,"2026-06-01":true,"2026-06-02":true,"2026-06-03":true},"h12":{"2026-05-26":true,"2026-06-01":true,"2026-06-02":true},"h13":{"2026-05-25":true,"2026-05-26":true,"2026-06-01":true},"h15":{"2026-05-25":true,"2026-06-01":true},"h16":{"2026-05-24":true,"2026-05-25":true,"2026-05-26":true,"2026-05-29":true,"2026-05-30":true,"2026-05-31":true,"2026-06-01":true,"2026-06-02":true,"2026-06-03":true,"2026-06-04":true,"2026-06-05":true,"2026-06-06":true},"h17":{"2026-05-26":true,"2026-05-27":true,"2026-06-01":true},"h18":{"2026-05-26":true,"2026-05-27":true,"2026-06-01":true,"2026-06-02":true}};}catch{return {};}});
-  const [logs,setLogs]=useState(()=>{try{const s=localStorage.getItem("m-lg");return s?JSON.parse(s):{};}catch{return {};}});
-  const [screen,setScreen]=useState("home");
-  const [editH,setEditH]=useState(null);
-  const [wakeH,setWakeH]=useState(null);
-  const [addingTask,setAddingTask]=useState(false);
-  const [toast,setToast]=useState(null); // {msg, onUndo}
-
-
-
-  const showToast=(msg,onUndo=null)=>{
-    setToast({msg,onUndo});
-    setTimeout(()=>setToast(null),onUndo?3600:2600);
-  };
-
-  useEffect(()=>{try{localStorage.setItem("m8",JSON.stringify(data));}catch{}},[data]);
-  useEffect(()=>{try{localStorage.setItem("m-tr",JSON.stringify(tr));}catch{}},[tr]);
-  useEffect(()=>{try{localStorage.setItem("m-lg",JSON.stringify(logs));}catch{}},[logs]);
-  useEffect(()=>{document.body.style.background=Z.bg;},[]);
-  useEffect(()=>{if(document.getElementById("mss"))return;const el=document.createElement("style");el.id="mss";el.textContent=CSS;document.head.appendChild(el);},[]);
-
-  const habits=useMemo(()=>flatH(data.aree),[data.aree]);
-  const ts=tod();
-  const todayH=habits.filter(h=>isExpected(h,ts));
-  const tdone=todayH.filter(h=>tr[h.id]?.[ts]).length;
-  const tpct=todayH.length?Math.round(tdone/todayH.length*100):100;
-
-  const toggle=useCallback(id=>{const t=tod();setTr(prev=>{const l=prev[id]||{};return{...prev,[id]:{...l,[t]:!l[t]}};});},[]);
-
-  const saveHabit=({s,note,freq,nome})=>{
-    if(!editH)return;
-    setData(d=>({...d,aree:d.aree.map(a=>({...a,cat:a.cat.map(c=>({...c,h:c.h.map(h=>h.id===editH.id?{...h,s,note,freq:freq||h.freq,nome:nome||h.nome}:h)}))}))}));
-    setEditH(null);
-  };
-  const delHabit=(hId)=>{
-    const id=hId||editH?.id;
-    if(!id)return;
-    setData(d=>({...d,aree:d.aree.map(a=>({...a,
-      cat:a.cat.map(cat=>({...cat,
-        h:(cat.h||[]).filter(h=>h.id!==id)
-      }))
-    }))}));
-    if(!hId)setEditH(null);
-  };
-  const addHabit=(catId,nome)=>{
-    setData(d=>({...d,aree:d.aree.map(a=>({...a,cat:a.cat.map(c=>c.id!==catId?c:{...c,h:[...c.h,{id:uid(),nome,s:"red",note:"",freq:{type:"daily"},logType:"nessuno"}]})}))}));
-  };
-  const saveWake=(hId,entry)=>{
-    const t=tod();
-    setLogs(prev=>({...prev,[hId]:{...(prev[hId]||{}),[t]:{...(prev[hId]?.[t]||{}),...entry}}}));
-    setTr(prev=>{const l=prev[hId]||{};return{...prev,[hId]:{...l,[t]:true}};});
-    setWakeH(null);
-  };
-  const addTask=(ch)=>{
-    setData(d=>({...d,tasks:[...(d.tasks||[]),{id:uid(),done:false,...ch}]}));
-    setAddingTask(false);
-  };
-
-  // Nav
-  const NAV=[
-    {id:"home",     l:"Home"},
-    {id:"abitudini",l:"Abitudini"},
-    {id:"task",     l:"Task"},
-    {id:"obiettivi",l:"Obiettivi"},
-    {id:"visione",  l:"Visione"},
-    {id:"analisi",  l:"Analisi"},
-  ];
-
-  const ICONS={
-    home:a=>(
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-        strokeWidth={a?2.2:1.6} strokeLinecap="round" strokeLinejoin="round">
-        <path d="M3 10L12 3l9 7v10a1 1 0 01-1 1H4a1 1 0 01-1-1V10z"/>
-        <polyline points="9 21 9 12 15 12 15 21" stroke="currentColor" strokeWidth={a?2.2:1.6} fill="none"/>
-      </svg>
-    ),
-    abitudini:a=>(
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-        strokeWidth={a?2.2:1.6} strokeLinecap="round" strokeLinejoin="round">
-        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/>
-        <path d="M7 12.5l3.5 3.5 6-7"/>
-      </svg>
-    ),
-    task:a=>(
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-        strokeWidth={a?2.2:1.6} strokeLinecap="round" strokeLinejoin="round">
-        <line x1="9" y1="6" x2="20" y2="6"/>
-        <line x1="9" y1="12" x2="20" y2="12"/>
-        <line x1="9" y1="18" x2="20" y2="18"/>
-        <polyline points="4 6 5 7 7 5"/>
-        <polyline points="4 12 5 13 7 11"/>
-        <polyline points="4 18 5 19 7 17"/>
-      </svg>
-    ),
-    obiettivi:a=>(
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-        strokeWidth={a?2.2:1.6} strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="12" cy="12" r="10"/>
-        <circle cx="12" cy="12" r="6"/>
-        <circle cx="12" cy="12" r="2"/>
-      </svg>
-    ),
-    visione:a=>(
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-        strokeWidth={a?2.2:1.6} strokeLinecap="round" strokeLinejoin="round">
-        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
-      </svg>
-    ),
-    analisi:a=>(
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-        strokeWidth={a?2.2:1.6} strokeLinecap="round" strokeLinejoin="round">
-        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-        <line x1="9" y1="10" x2="15" y2="10"/>
-        <line x1="12" y1="7" x2="12" y2="13"/>
-      </svg>
-    ),
-  };
-
-  return(
-    <div style={{height:"100dvh",maxWidth:480,margin:"0 auto",
-      background:Z.bg,color:Z.t,
-      fontFamily:"Inter,-apple-system,BlinkMacSystemFont,sans-serif",
-      display:"flex",flexDirection:"column",overflow:"hidden",
-      WebkitFontSmoothing:"antialiased"}}>
-
-      {/* Modali globali */}
-      {editH&&<EditHabit item={editH} onSave={saveHabit} onDel={delHabit} onClose={()=>setEditH(null)}/>}
-      {toast&&<Toast msg={toast.msg} onUndo={toast.onUndo} onDone={()=>setToast(null)}/>}
-      {wakeH&&<WakeLog h={wakeH} logs={logs} onLog={saveWake} onClose={()=>setWakeH(null)}/>}
-      {addingTask&&<EditTask task={{}} onSave={addTask} onDel={()=>{}} onClose={()=>setAddingTask(false)} aree={data.aree}/>}
-
-      {/* HEADER */}
-      <div style={{flexShrink:0,zIndex:20,
-        background:"rgba(10,10,10,0.92)",
-        backdropFilter:"blur(20px)",WebkitBackdropFilter:"blur(20px)",
-        borderBottom:`1px solid ${Z.b}`}}>
-        <div style={{display:"flex",alignItems:"center",padding:"13px 18px 0"}}>
-          <div style={{flex:1}}>
-            <span style={{fontSize:20,fontWeight:800,letterSpacing:"-0.5px",color:Z.t}}>
-              <span style={{color:SILVER_BRIGHT,transition:"color 0.3s"}}>M</span>eridian
-            </span>
-          </div>
-          {/* Info contestuale per tab */}
-          <div style={{fontSize:11,color:Z.t3,fontWeight:500,
-            letterSpacing:"0.06em",fontFamily:"'JetBrains Mono',monospace",
-            textAlign:"right"}}>
-            {screen==="home"&&(
-              <span>{new Date().toLocaleDateString("it-IT",{weekday:"short",day:"numeric",month:"short"})}</span>
-            )}
-            {screen==="abitudini"&&(
-              <span style={{color:tpct===100?"#00e5a0":SILVER}}>{tdone}/{todayH.length} oggi</span>
-            )}
-            {screen==="obiettivi"&&(()=>{
-              const avg=data.goals?.length?Math.round(data.goals.reduce((s,g)=>s+(g.pct||0),0)/data.goals.length):0;
-              return <span style={{color:avg>=70?"#00e5a0":avg>=40?"#facc15":Z.t3}}>{avg}% medio</span>;
-            })()}
-            {screen==="visione"&&(()=>{
-              const avg=VITA_AREE.reduce((s,a)=>{
-                const vals=a.cat.map(cat=>data.vita?.[cat.id]||0);
-                return s+vals.reduce((x,v)=>x+v,0)/vals.length;
-              },0)/VITA_AREE.length;
-              return <span style={{color:SILVER}}>{Math.round(avg*10)/10}/10</span>;
-            })()}
-            {screen==="analisi"&&<span>Lucius</span>}
-            {screen==="task"&&(()=>{
-              const n=(data.tasks||[]).filter(t=>!t.done).length;
-              return <span style={{color:n>0?SILVER:Z.t3}}>{n} {n===1?"aperto":"aperti"}</span>;
-            })()}
-          </div>
-        </div>
-        {/* Barra sintesi â€” Abitudini Â· Task Â· Obiettivi */}
-        <div style={{padding:"8px 18px 0"}}>{(()=>{
-          const pendingT=(data.tasks||[]).filter(t=>!t.done).length;
-          const avgGoal=data.goals?.length?Math.round(data.goals.reduce((s,g)=>s+(g.pct||0),0)/data.goals.length):0;
-          return(
-            <div style={{display:"flex",alignItems:"center",gap:0,marginBottom:8}}>
-              {/* Abitudini */}
-              <div style={{flex:1,display:"flex",alignItems:"center",gap:6}}>
-                <div style={{flex:1,height:2,background:Z.b,borderRadius:1,overflow:"hidden"}}>
-                  <div style={{height:"100%",width:`${tpct}%`,
-                    background:tpct===100?"#00e5a0":SILVER,
-                    transition:"width 0.7s cubic-bezier(.4,0,.2,1)",borderRadius:1}}/>
-                </div>
-                <span style={{fontSize:9,color:tpct===100?"#00e5a0":Z.t3,
-                  fontFamily:"'JetBrains Mono',monospace",whiteSpace:"nowrap"}}>
-                  {tdone}/{todayH.length}
-                </span>
-              </div>
-              <div style={{width:1,height:12,background:Z.b,margin:"0 8px",flexShrink:0}}/>
-              {/* Task */}
-              <div style={{display:"flex",alignItems:"center",gap:4,flexShrink:0}}>
-                <span style={{fontSize:9,color:Z.t3,fontFamily:"'JetBrains Mono',monospace"}}>Task</span>
-                <span style={{fontSize:9,fontWeight:600,
-                  color:pendingT>0?SILVER:Z.t3,
-                  fontFamily:"'JetBrains Mono',monospace"}}>{pendingT}</span>
-              </div>
-              <div style={{width:1,height:12,background:Z.b,margin:"0 8px",flexShrink:0}}/>
-              {/* Obiettivi */}
-              <div style={{display:"flex",alignItems:"center",gap:4,flexShrink:0}}>
-                <span style={{fontSize:9,color:Z.t3,fontFamily:"'JetBrains Mono',monospace"}}>Goal</span>
-                <span style={{fontSize:9,fontWeight:600,color:SILVER,
-                  fontFamily:"'JetBrains Mono',monospace"}}>{avgGoal}%</span>
-              </div>
-            </div>
-          );
-        })()}</div>
-      </div>
-
-      {/* CONTENT */}
-      <div key={screen} className="fadeup" style={{flex:1,overflowY:"auto",overflowX:"hidden",zIndex:1,
-        padding:"18px 15px 0",WebkitOverflowScrolling:"touch",animation:"fadeup 0.22s cubic-bezier(0.16,1,0.3,1) both"}}>
-        {screen==="abitudini"&&<Abitudini data={data} tr={tr} logs={logs} onDel={delHabit} onToggle={toggle}
-          onEdit={h=>setEditH(h)} onLog={h=>h.logType==="sveglia"?setWakeH(h):null} onAdd={addHabit}/>}
-        {screen==="task"     &&<TaskScreen data={data} setData={setData} onAdd={()=>setAddingTask(true)} showToast={showToast}/>}
-        {screen==="obiettivi"&&<Obiettivi data={data} setData={setData} showToast={showToast}/>}
-        {screen==="visione"  &&<Vita data={data} setData={setData}/>}
-        {screen==="analisi"  &&<Lucius data={data} tr={tr}/>}
-        {screen==="home"     &&<Home data={data} tr={tr} logs={logs} showToast={showToast} onToggle={toggle}
-          onEditHabit={h=>setEditH(h)} onLog={h=>h.logType==="sveglia"?setWakeH(h):null}
-          setScreen={setScreen} setData={setData} onAddTask={()=>setAddingTask(true)}/>}
-        <div style={{height:92}}/>
-      </div>
-
-      {/* BOTTOM NAV */}
-      <div style={{flexShrink:0,zIndex:20,
-        background:"rgba(10,10,10,0.96)",
-        backdropFilter:"blur(24px)",WebkitBackdropFilter:"blur(24px)",
-        borderTop:`1px solid ${Z.b}`,
-        paddingBottom:"env(safe-area-inset-bottom,0px)"}}>
-        <div style={{display:"flex"}}>
-          {NAV.map(n=>{
-            const a=screen===n.id;
-            return(
-              <button key={n.id} onClick={()=>setScreen(n.id)}
-                style={{flex:1,display:"flex",flexDirection:"column",alignItems:"center",gap:3,
-                  padding:"8px 4px 6px",color:a?SILVER_BRIGHT:Z.t3,transition:"color 0.2s"}}>
-                <div style={{width:44,height:28,borderRadius:13,
-                  display:"flex",alignItems:"center",justifyContent:"center",
-                  background:a?"rgba(210,210,220,0.1)":"transparent",
-                  transition:"background 0.2s"}}>
-                  {ICONS[n.id]?.(a)}
-                </div>
-                <span style={{fontSize:9,fontWeight:a?600:400,letterSpacing:"0.01em",lineHeight:1}}>
-                  {n.l}
-                </span>
-              </button>
-            );
-          })}
-        </div>
-      </div>
-    </div>
-  );
-}
+            <div style={{fontSize:15,fontWeight:700,color:"#00e5a0",marginBottom:2}}>Tutto completato! 🎉</div>
+        
